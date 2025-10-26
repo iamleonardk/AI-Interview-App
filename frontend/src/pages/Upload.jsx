@@ -81,11 +81,12 @@ const Upload = () => {
       setUploadProgress((prev) => ({ ...prev, [type]: 100 }));
 
       toast.success(`${type === 'resume' ? 'Resume' : 'Job Description'} uploaded successfully!`);
-      await fetchDocuments();
 
-      setTimeout(() => {
+      // Delay fetchDocuments to allow progress animation to complete
+      setTimeout(async () => {
+        await fetchDocuments();
         setUploadProgress((prev) => ({ ...prev, [type]: 0 }));
-      }, 1000);
+      }, 1200);
     } catch (error) {
       const message = error.response?.data?.message || 'Upload failed';
       toast.error(message);
@@ -139,13 +140,14 @@ const Upload = () => {
       >
         <h3 className="text-xl font-bold gradient-text mb-4">{title}</h3>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync" initial={false}>
           {doc ? (
             <motion.div
-              key="uploaded"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              key={`uploaded-${type}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="space-y-4"
             >
               <motion.div
@@ -205,10 +207,11 @@ const Upload = () => {
             </motion.div>
           ) : (
             <motion.div
-              key="empty"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              key={`empty-${type}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 ${
                 dragActive[type]
                   ? 'border-purple-500 bg-purple-50 shadow-lg scale-105'
@@ -252,32 +255,33 @@ const Upload = () => {
           )}
         </AnimatePresence>
 
-        <AnimatePresence>
-          {progress > 0 && (
-            <motion.div
-              className="mt-4"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-            >
-              <div className="bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
-                <motion.div
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 h-full rounded-full shadow-lg"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.3 }}
-                />
-              </div>
-              <motion.p
-                className="text-sm font-semibold gradient-text mt-2 text-center"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+        <div className="mt-4 min-h-[60px]">
+          <AnimatePresence>
+            {progress > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                {progress}% uploaded
-              </motion.p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <div className="bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+                  <motion.div
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 h-full rounded-full shadow-lg"
+                    style={{ width: `${progress}%` }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                  />
+                </div>
+                <motion.p
+                  className="text-sm font-semibold gradient-text mt-2 text-center"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  {progress}% uploaded
+                </motion.p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.div>
     );
   };
