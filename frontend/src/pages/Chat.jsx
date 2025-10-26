@@ -129,30 +129,30 @@ const Chat = () => {
   return (
     <div className="min-h-screen">
       <motion.div
-        className="container mx-auto px-4 py-8 max-w-5xl"
+        className="container mx-auto px-2 sm:px-4 py-2 sm:py-4 lg:py-8 max-w-5xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="glass-card overflow-hidden flex flex-col shadow-2xl" style={{ height: 'calc(100vh - 10rem)' }}>
+        <div className="glass-card overflow-hidden flex flex-col shadow-2xl" style={{ height: 'calc(100vh - 8rem)' }}>
           {/* Header */}
           <motion.div
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 flex justify-between items-center"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 sm:p-4 lg:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center space-x-3">
-              <div className="bg-white/20 rounded-full p-2">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-white/20 rounded-full p-1.5 sm:p-2">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold">AI Interview Session</h1>
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold">AI Interview Session</h1>
             </div>
             <motion.button
               onClick={handleEndChat}
-              className="bg-white/20 hover:bg-white/30 px-6 py-2 rounded-xl transition-all font-semibold backdrop-blur-sm"
+              className="bg-white/20 hover:bg-white/30 px-4 sm:px-6 py-1.5 sm:py-2 rounded-xl transition-all font-semibold backdrop-blur-sm text-sm sm:text-base self-end sm:self-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -161,7 +161,7 @@ const Chat = () => {
           </motion.div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-gray-50 to-white">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4 bg-gradient-to-b from-gray-50 to-white">
             <AnimatePresence initial={false}>
               {messages.map((message, index) => (
                 <motion.div
@@ -173,7 +173,7 @@ const Chat = () => {
                   transition={{ duration: 0.4, ease: "easeOut" }}
                 >
                   <motion.div
-                    className={`max-w-3xl rounded-2xl p-5 shadow-lg ${
+                    className={`max-w-[90%] sm:max-w-[85%] lg:max-w-3xl rounded-2xl p-3 sm:p-4 lg:p-5 shadow-lg ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
                         : 'bg-white text-gray-800 border border-gray-200'
@@ -181,19 +181,19 @@ const Chat = () => {
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="whitespace-pre-wrap">{message.content}</div>
+                    <div className="whitespace-pre-wrap text-sm sm:text-base break-words">{message.content}</div>
 
                     {message.score && (
                       <motion.div
-                        className="mt-4 pt-4 border-t border-gray-300"
+                        className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-300"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                       >
-                        <div className="flex items-center space-x-3">
-                          <span className="font-semibold">Score:</span>
+                        <div className="flex items-center space-x-2 sm:space-x-3 flex-wrap">
+                          <span className="font-semibold text-sm sm:text-base">Score:</span>
                           <motion.span
-                            className={`font-bold text-xl px-4 py-1 rounded-full ${
+                            className={`font-bold text-base sm:text-xl px-3 sm:px-4 py-0.5 sm:py-1 rounded-full ${
                               message.score >= 7
                                 ? 'bg-green-100 text-green-700'
                                 : message.score >= 5
@@ -212,18 +212,18 @@ const Chat = () => {
 
                     {message.citations && message.citations.length > 0 && (
                       <motion.div
-                        className="mt-4 pt-4 border-t border-gray-300"
+                        className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-300"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
                       >
-                        <p className="text-sm font-semibold mb-3">References:</p>
-                        <div className="space-y-2">
+                        <p className="text-xs sm:text-sm font-semibold mb-2 sm:mb-3">References:</p>
+                        <div className="space-y-1.5 sm:space-y-2">
                           {message.citations.map((citation, idx) => (
                             <motion.button
                               key={citation.id}
                               onClick={() => setSelectedCitation(citation)}
-                              className="text-sm text-blue-600 hover:text-blue-800 block text-left hover:bg-blue-50 px-3 py-2 rounded-lg transition-colors w-full"
+                              className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 block text-left hover:bg-blue-50 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-colors w-full break-words"
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.6 + idx * 0.1 }}
@@ -276,24 +276,24 @@ const Chat = () => {
 
           {/* Input */}
           <motion.div
-            className="border-t border-gray-200 p-6 bg-white"
+            className="border-t border-gray-200 p-3 sm:p-4 lg:p-6 bg-white"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="flex space-x-3">
+            <form onSubmit={handleSubmit} className="flex gap-2 sm:gap-3">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your answer here..."
-                className="flex-1 input-field"
+                className="flex-1 input-field text-sm sm:text-base"
                 disabled={loading}
               />
               <motion.button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="btn-primary"
+                className="btn-primary px-4 sm:px-6 text-sm sm:text-base whitespace-nowrap"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -308,35 +308,35 @@ const Chat = () => {
       <AnimatePresence>
         {selectedCitation && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 z-50"
             onClick={() => setSelectedCitation(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="glass-card max-w-2xl w-full max-h-96 overflow-y-auto"
+              className="glass-card max-w-2xl w-full max-h-[80vh] overflow-y-auto p-4 sm:p-6 lg:p-8"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
             >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-2xl font-bold gradient-text">
+              <div className="flex justify-between items-start mb-3 sm:mb-4 gap-2">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold gradient-text">
                   Reference from {selectedCitation.source}
                 </h3>
                 <motion.button
                   onClick={() => setSelectedCitation(null)}
-                  className="text-gray-500 hover:text-gray-700 text-3xl font-bold hover:bg-gray-100 rounded-lg w-10 h-10 flex items-center justify-center"
+                  className="text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl font-bold hover:bg-gray-100 rounded-lg w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0"
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                 >
                   &times;
                 </motion.button>
               </div>
-              <p className="text-gray-700 leading-relaxed">{selectedCitation.text}</p>
-              <div className="mt-4 text-sm font-semibold gradient-text">
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{selectedCitation.text}</p>
+              <div className="mt-3 sm:mt-4 text-xs sm:text-sm font-semibold gradient-text">
                 Similarity: {selectedCitation.similarity}
               </div>
             </motion.div>

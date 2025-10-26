@@ -132,30 +132,30 @@ const Upload = () => {
 
     return (
       <div
-        className="glass-card "
+        className="glass-card p-4 sm:p-6 lg:p-8"
       >
-        <h3 className="text-xl font-bold gradient-text mb-4">{title}</h3>
+        <h3 className="text-lg sm:text-xl font-bold gradient-text mb-3 sm:mb-4">{title}</h3>
 
         {doc ? (
-          <div className="space-y-4">
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-200">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-green-500 rounded-full p-2">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="space-y-3 sm:space-y-4">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-3 sm:p-4 shadow-md hover:shadow-lg transition-shadow duration-200">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                  <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                    <div className="bg-green-500 rounded-full p-1.5 sm:p-2 flex-shrink-0">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <div>
-                      <p className="font-semibold text-green-800">{doc.filename}</p>
-                      <p className="text-sm text-green-600">
+                    <div className="min-w-0">
+                      <p className="font-semibold text-green-800 text-sm sm:text-base truncate">{doc.filename}</p>
+                      <p className="text-xs sm:text-sm text-green-600">
                         Uploaded on {new Date(doc.createdAt).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={() => handleDelete(doc.id)}
-                    className="text-red-600 hover:text-red-800 font-semibold px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-200 hover:scale-105 active:scale-95"
+                    className="text-red-600 hover:text-red-800 font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-red-50 transition-all duration-200 hover:scale-105 active:scale-95 text-sm sm:text-base self-end sm:self-auto flex-shrink-0"
                   >
                     Delete
                   </button>
@@ -163,7 +163,7 @@ const Upload = () => {
               </div>
 
               <div
-                className={`border-2 border-dashed rounded-xl p-6 text-center transition-all duration-200 ${
+                className={`border-2 border-dashed rounded-xl p-4 sm:p-6 text-center transition-all duration-200 ${
                   dragActive[type]
                     ? 'border-purple-500 bg-purple-50 shadow-lg'
                     : 'border-gray-300 hover:border-purple-400 hover:bg-gray-50'
@@ -173,8 +173,8 @@ const Upload = () => {
                 onDragOver={(e) => handleDrag(e, type)}
                 onDrop={(e) => handleDrop(e, type)}
               >
-                <p className="text-gray-600 mb-2">Upload a new {title.toLowerCase()}</p>
-                <label className="cursor-pointer gradient-text font-semibold hover:underline">
+                <p className="text-sm sm:text-base text-gray-600 mb-2">Upload a new {title.toLowerCase()}</p>
+                <label className="cursor-pointer gradient-text font-semibold hover:underline text-sm sm:text-base">
                   Browse Files
                   <input
                     type="file"
@@ -187,7 +187,7 @@ const Upload = () => {
             </div>
           ) : (
             <div
-              className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-200 ${
+              className={`border-2 border-dashed rounded-xl p-6 sm:p-8 lg:p-12 text-center transition-all duration-200 ${
                 dragActive[type]
                   ? 'border-purple-500 bg-purple-50 shadow-lg'
                   : 'border-gray-300 hover:border-purple-400 hover:bg-gray-50'
@@ -198,7 +198,7 @@ const Upload = () => {
               onDrop={(e) => handleDrop(e, type)}
             >
               <svg
-                className={`mx-auto h-16 w-16 transition-all duration-200 ${
+                className={`mx-auto h-12 w-12 sm:h-16 sm:w-16 transition-all duration-200 ${
                   dragActive[type] ? 'text-purple-500 scale-110' : 'text-gray-400'
                 }`}
                 stroke="currentColor"
@@ -212,10 +212,10 @@ const Upload = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <p className="mt-4 text-gray-700 font-medium">
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-700 font-medium">
                 Drag and drop your {title.toLowerCase()} here, or
               </p>
-              <label className="mt-3 inline-block cursor-pointer gradient-text font-bold text-lg hover:underline">
+              <label className="mt-2 sm:mt-3 inline-block cursor-pointer gradient-text font-bold text-base sm:text-lg hover:underline">
                 Browse Files
                 <input
                   type="file"
@@ -224,26 +224,25 @@ const Upload = () => {
                   onChange={(e) => handleFileInput(e, type)}
                 />
               </label>
-              <p className="mt-3 text-sm text-gray-500">PDF only, max 2MB</p>
+              <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-500">PDF only, max 2MB</p>
             </div>
           )}
 
         {progress > 0 && (
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
               {progress < 100 && (
                 <div
                   key="progress"
-                
                   className="space-y-2 overflow-hidden"
                 >
-                  <div className="bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+                  <div className="bg-gray-200 rounded-full h-2 sm:h-3 overflow-hidden shadow-inner">
                     <motion.div
                       className="bg-gradient-to-r from-blue-500 to-purple-600 h-full rounded-full shadow-lg"
                       style={{ width: `${progress}%` }}
                       transition={{ duration: 0.2, ease: "easeOut" }}
                     />
                   </div>
-                  <p className="text-sm font-semibold gradient-text text-center">
+                  <p className="text-xs sm:text-sm font-semibold gradient-text text-center">
                     Uploading... {progress}%
                   </p>
                 </div>
@@ -256,31 +255,24 @@ const Upload = () => {
   };
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-6 sm:py-8 lg:py-12">
       <div
-        className="container mx-auto px-4 max-w-5xl"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl"
       >
-        <div
-         
-        >
-          <h1 className="text-5xl font-bold gradient-text mb-3">Upload Documents</h1>
-          <p className="text-gray-600 text-lg">Upload your resume and job description to get started</p>
+        <div className="mb-6 sm:mb-8 lg:mb-10">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-2 sm:mb-3">Upload Documents</h1>
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600">Upload your resume and job description to get started</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 lg:mb-10">
           <UploadZone type="resume" title="Resume" />
           <UploadZone type="jd" title="Job Description" />
         </div>
 
-        <div
-          className="text-center"
-         
-        >
+        <div className="text-center">
           <button
             onClick={handleProceedToChat}
-            className="btn-primary text-lg"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="btn-primary text-base sm:text-lg"
           >
             Proceed to Interview
           </button>

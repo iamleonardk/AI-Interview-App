@@ -62,7 +62,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <motion.div
           className="max-w-4xl mx-auto text-center"
           variants={containerVariants}
@@ -70,7 +70,7 @@ const Landing = () => {
           animate="visible"
         >
           <motion.div variants={itemVariants}>
-            <h1 className="text-6xl md:text-7xl font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
               <span className="gradient-text">AI-Powered</span>
               <br />
               <span className="text-gray-800">Interview Preparation</span>
@@ -78,7 +78,7 @@ const Landing = () => {
           </motion.div>
 
           <motion.p
-            className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-8 sm:mb-10 lg:mb-12 max-w-2xl mx-auto px-2"
             variants={itemVariants}
           >
             Practice interviews with AI, get instant feedback, and improve your chances
@@ -86,11 +86,11 @@ const Landing = () => {
           </motion.p>
 
           <motion.div
-            className="glass-card mb-12"
+            className="glass-card mb-8 sm:mb-10 lg:mb-12 p-4 sm:p-6 lg:p-8"
             variants={itemVariants}
           >
-            <h2 className="text-3xl font-semibold gradient-text mb-8">How It Works</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold gradient-text mb-6 sm:mb-8">How It Works</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {[
                 {
                   number: 1,
@@ -113,20 +113,20 @@ const Landing = () => {
               ].map((step, index) => (
                 <motion.div
                   key={step.number}
-                  className="p-6 rounded-xl bg-gradient-to-br from-white to-blue-50 shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="p-4 sm:p-6 rounded-xl bg-gradient-to-br from-white to-blue-50 shadow-lg hover:shadow-xl transition-all duration-300"
                   variants={cardVariants}
                   whileHover="hover"
                   custom={index}
                 >
                   <motion.div
-                    className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 shadow-lg"
+                    className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <span className="text-4xl">{step.icon}</span>
+                    <span className="text-3xl sm:text-4xl">{step.icon}</span>
                   </motion.div>
-                  <h3 className="font-bold text-xl mb-3 gradient-text">{step.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 gradient-text">{step.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                     {step.description}
                   </p>
                 </motion.div>
@@ -135,14 +135,14 @@ const Landing = () => {
           </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row justify-center gap-4"
+            className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4"
             variants={itemVariants}
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link to="/signup" className="btn-primary text-lg inline-block">
+              <Link to="/signup" className="btn-primary text-base sm:text-lg inline-block w-full sm:w-auto">
                 Get Started
               </Link>
             </motion.div>
@@ -150,14 +150,14 @@ const Landing = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link to="/login" className="btn-secondary text-lg inline-block">
+              <Link to="/login" className="btn-secondary text-base sm:text-lg inline-block w-full sm:w-auto">
                 Sign In
               </Link>
             </motion.div>
           </motion.div>
 
           <motion.div
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center"
             variants={containerVariants}
           >
             {[
@@ -168,12 +168,12 @@ const Landing = () => {
             ].map((stat, index) => (
               <motion.div
                 key={index}
-                className="p-4"
+                className="p-2 sm:p-4"
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
               >
-                <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
-                <div className="text-gray-600 text-sm">{stat.label}</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1 sm:mb-2">{stat.value}</div>
+                <div className="text-gray-600 text-xs sm:text-sm">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>

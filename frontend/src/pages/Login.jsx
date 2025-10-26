@@ -61,22 +61,22 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         className="max-w-md w-full"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants} className="text-center mb-8">
-          <h2 className="text-4xl font-extrabold gradient-text mb-2">
+        <motion.div variants={itemVariants} className="text-center mb-6 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl font-extrabold gradient-text mb-2">
             Welcome Back
           </h2>
-          <p className="text-gray-600">Sign in to continue your journey</p>
+          <p className="text-sm sm:text-base text-gray-600">Sign in to continue your journey</p>
         </motion.div>
 
         <motion.form
-          className="glass-card space-y-6"
+          className="glass-card space-y-5 sm:space-y-6 p-6 sm:p-8"
           onSubmit={handleSubmit}
           variants={itemVariants}
         >
@@ -134,7 +134,7 @@ const Login = () => {
             </motion.button>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="text-center text-sm">
+          <motion.div variants={itemVariants} className="text-center text-xs sm:text-sm">
             <span className="text-gray-600">Don't have an account? </span>
             <Link to="/signup" className="font-semibold gradient-text hover:underline">
               Sign up
@@ -143,10 +143,10 @@ const Login = () => {
         </motion.form>
 
         <motion.div
-          className="mt-6 text-center"
+          className="mt-4 sm:mt-6 text-center"
           variants={itemVariants}
         >
-          <Link to="/" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+          <Link to="/" className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 transition-colors">
             Back to home
           </Link>
         </motion.div>
