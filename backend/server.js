@@ -28,13 +28,26 @@ const corsOptions = {
       process.env.FRONTEND_URL
     ].filter(Boolean);
 
+    console.log('Request from origin:', origin);
+    console.log('Allowed origins:', allowedOrigins);
+
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Check if origin matches any allowed origin
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      // Remove trailing slash for comparison
+      const normalizedOrigin = origin.replace(/\/$/, '');
+      const normalizedAllowed = allowedOrigin.replace(/\/$/, '');
+      return normalizedOrigin === normalizedAllowed;
+    });
+
+    if (isAllowed) {
+      console.log('CORS allowed for:', origin);
       callback(null, true);
     } else {
       console.log('Blocked by CORS:', origin);
+      console.log('Expected FRONTEND_URL:', process.env.FRONTEND_URL);
       callback(new Error('Not allowed by CORS'));
     }
   },
