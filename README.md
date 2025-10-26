@@ -55,7 +55,69 @@ Make sure you have the following installed:
 
 ---
 
+## ⚙️ Installation
 
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/<your-username>/AI-Interview-App.git
+cd AI-Interview-App
+```
+
+### 2️⃣ Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file inside the `backend/` directory:
+
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/interview-prep?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_jwt_key_change_this
+OPENAI_API_KEY=sk-your-openai-api-key-here
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+```
+
+### 3️⃣ Frontend Setup
+
+```bash
+cd frontend
+npm install
+```
+
+Create a `.env` file inside the `frontend/` directory:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+---
+
+## ▶️ Running the Application
+
+### Start Backend
+
+```bash
+cd backend
+npm run dev
+```
+
+Server runs at: **http://localhost:5000**
+
+### Start Frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+App runs at: **http://localhost:5173**
+
+---
 
 ## 🧑‍💻 Usage Guide
 
@@ -160,5 +222,3 @@ AI-Interview-App/
 │
 └── README.md
 ```
-
-
