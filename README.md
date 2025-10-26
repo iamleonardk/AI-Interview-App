@@ -161,24 +161,4 @@ AI-Interview-App/
 └── README.md
 ```
 
----
 
-## 💡 Future Enhancements
-
-* 🗣️ **Voice-based answers** with speech-to-text
-* 📊 **Analytics dashboard** for performance tracking
-* 🧾 **Export feedback reports (PDF)**
-* 🌐 **Multilingual support**
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!
-Feel free to open **issues**, submit **pull requests**, or suggest new features.
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
