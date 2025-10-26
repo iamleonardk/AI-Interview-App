@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authAPI } from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -44,84 +45,135 @@ const Signup = () => {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div
+        className="max-w-md w-full"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants} className="text-center mb-8">
+          <h2 className="text-4xl font-extrabold gradient-text mb-2">
+            Join Us Today
           </h2>
-        </div>
+          <p className="text-gray-600">Start your interview preparation journey</p>
+        </motion.div>
 
-        <form className="mt-8 space-y-6 bg-white p-8 rounded-lg shadow-md" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="input-field mt-1"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
+        <motion.form
+          className="glass-card space-y-6"
+          onSubmit={handleSubmit}
+          variants={itemVariants}
+        >
+          <motion.div variants={itemVariants}>
+            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+              Full Name
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              className="input-field"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </motion.div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="input-field mt-1"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
+          <motion.div variants={itemVariants}>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              className="input-field"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </motion.div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="input-field mt-1"
-                placeholder="Password (min 6 characters)"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          <motion.div variants={itemVariants}>
+            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              className="input-field"
+              placeholder="Create a password (min 6 characters)"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </motion.div>
 
-          <div>
-            <button
+          <motion.div variants={itemVariants}>
+            <motion.button
               type="submit"
               disabled={loading}
               className="w-full btn-primary"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {loading ? 'Creating account...' : 'Sign up'}
-            </button>
-          </div>
+              {loading ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating account...
+                </span>
+              ) : (
+                'Sign up'
+              )}
+            </motion.button>
+          </motion.div>
 
-          <div className="text-center text-sm">
+          <motion.div variants={itemVariants} className="text-center text-sm">
             <span className="text-gray-600">Already have an account? </span>
-            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link to="/login" className="font-semibold gradient-text hover:underline">
               Sign in
             </Link>
-          </div>
-        </form>
-      </div>
+          </motion.div>
+        </motion.form>
+
+        <motion.div
+          className="mt-6 text-center"
+          variants={itemVariants}
+        >
+          <Link to="/" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+            Back to home
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

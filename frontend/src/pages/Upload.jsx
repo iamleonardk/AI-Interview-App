@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { documentAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Upload = () => {
   const [documents, setDocuments] = useState([]);
@@ -130,39 +131,114 @@ const Upload = () => {
     const progress = uploadProgress[type];
 
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4">{title}</h3>
+      <motion.div
+        className="glass-card"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h3 className="text-xl font-bold gradient-text mb-4">{title}</h3>
 
-        {doc ? (
-          <div className="space-y-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium text-green-800">{doc.filename}</p>
-                  <p className="text-sm text-green-600">
-                    Uploaded on {new Date(doc.createdAt).toLocaleDateString()}
-                  </p>
+        <AnimatePresence mode="wait">
+          {doc ? (
+            <motion.div
+              key="uploaded"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="space-y-4"
+            >
+              <motion.div
+                className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 shadow-md"
+                initial={{ x: -20 }}
+                animate={{ x: 0 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-green-500 rounded-full p-2">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-green-800">{doc.filename}</p>
+                      <p className="text-sm text-green-600">
+                        Uploaded on {new Date(doc.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <motion.button
+                    onClick={() => handleDelete(doc.id)}
+                    className="text-red-600 hover:text-red-800 font-semibold px-4 py-2 rounded-lg hover:bg-red-50 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Delete
+                  </motion.button>
                 </div>
-                <button
-                  onClick={() => handleDelete(doc.id)}
-                  className="text-red-600 hover:text-red-800"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+              </motion.div>
 
-            <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center ${
-                dragActive[type] ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+              <motion.div
+                className={`border-2 border-dashed rounded-xl p-6 text-center transition-all duration-300 ${
+                  dragActive[type]
+                    ? 'border-purple-500 bg-purple-50 shadow-lg scale-105'
+                    : 'border-gray-300 hover:border-purple-300'
+                }`}
+                onDragEnter={(e) => handleDrag(e, type)}
+                onDragLeave={(e) => handleDrag(e, type)}
+                onDragOver={(e) => handleDrag(e, type)}
+                onDrop={(e) => handleDrop(e, type)}
+                whileHover={{ scale: 1.02 }}
+              >
+                <p className="text-gray-600 mb-2">Upload a new {title.toLowerCase()}</p>
+                <label className="cursor-pointer gradient-text font-semibold hover:underline">
+                  Browse Files
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept=".pdf"
+                    onChange={(e) => handleFileInput(e, type)}
+                  />
+                </label>
+              </motion.div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 ${
+                dragActive[type]
+                  ? 'border-purple-500 bg-purple-50 shadow-lg scale-105'
+                  : 'border-gray-300 hover:border-purple-300'
               }`}
               onDragEnter={(e) => handleDrag(e, type)}
               onDragLeave={(e) => handleDrag(e, type)}
               onDragOver={(e) => handleDrag(e, type)}
               onDrop={(e) => handleDrop(e, type)}
+              whileHover={{ scale: 1.02 }}
             >
-              <p className="text-gray-600 mb-2">Upload a new {title.toLowerCase()}</p>
-              <label className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium">
+              <motion.svg
+                className="mx-auto h-16 w-16 text-gray-400"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 48 48"
+                animate={dragActive[type] ? { scale: [1, 1.2, 1] } : {}}
+                transition={{ duration: 0.5, repeat: dragActive[type] ? Infinity : 0 }}
+              >
+                <path
+                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </motion.svg>
+              <p className="mt-4 text-gray-700 font-medium">
+                Drag and drop your {title.toLowerCase()} here, or
+              </p>
+              <label className="mt-3 inline-block cursor-pointer gradient-text font-bold text-lg hover:underline">
                 Browse Files
                 <input
                   type="file"
@@ -171,86 +247,85 @@ const Upload = () => {
                   onChange={(e) => handleFileInput(e, type)}
                 />
               </label>
-            </div>
-          </div>
-        ) : (
-          <div
-            className={`border-2 border-dashed rounded-lg p-12 text-center transition ${
-              dragActive[type]
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-gray-300 hover:border-gray-400'
-            }`}
-            onDragEnter={(e) => handleDrag(e, type)}
-            onDragLeave={(e) => handleDrag(e, type)}
-            onDragOver={(e) => handleDrag(e, type)}
-            onDrop={(e) => handleDrop(e, type)}
-          >
-            <svg
-              className="mx-auto h-12 w-12 text-gray-400"
-              stroke="currentColor"
-              fill="none"
-              viewBox="0 0 48 48"
-            >
-              <path
-                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p className="mt-4 text-gray-600">
-              Drag and drop your {title.toLowerCase()} here, or
-            </p>
-            <label className="mt-2 cursor-pointer text-blue-600 hover:text-blue-700 font-medium">
-              Browse Files
-              <input
-                type="file"
-                className="hidden"
-                accept=".pdf"
-                onChange={(e) => handleFileInput(e, type)}
-              />
-            </label>
-            <p className="mt-2 text-sm text-gray-500">PDF only, max 2MB</p>
-          </div>
-        )}
+              <p className="mt-3 text-sm text-gray-500">PDF only, max 2MB</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {progress > 0 && (
-          <div className="mt-4">
-            <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
-              <div
-                className="bg-blue-600 h-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <p className="text-sm text-gray-600 mt-2 text-center">{progress}% uploaded</p>
-          </div>
-        )}
-      </div>
+        <AnimatePresence>
+          {progress > 0 && (
+            <motion.div
+              className="mt-4"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <div className="bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+                <motion.div
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 h-full rounded-full shadow-lg"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+              <motion.p
+                className="text-sm font-semibold gradient-text mt-2 text-center"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                {progress}% uploaded
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Upload Documents</h1>
+    <div className="min-h-screen py-12">
+      <motion.div
+        className="container mx-auto px-4 max-w-5xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.div
+          className="text-center mb-12"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-5xl font-bold gradient-text mb-3">Upload Documents</h1>
+          <p className="text-gray-600 text-lg">Upload your resume and job description to get started</p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid md:grid-cols-2 gap-8 mb-10">
           <UploadZone type="resume" title="Resume" />
           <UploadZone type="jd" title="Job Description" />
         </div>
 
-        <div className="text-center">
-          <button
+        <motion.div
+          className="text-center"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          <motion.button
             onClick={handleProceedToChat}
             disabled={loading}
             className="btn-primary text-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Proceed to Interview
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        {loading && <LoadingSpinner message="Uploading and processing document..." />}
-      </div>
+        <AnimatePresence>
+          {loading && <LoadingSpinner message="Uploading and processing document..." />}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 };
